@@ -1,0 +1,216 @@
+[
+  {
+    "type": "project",
+    "named": true,
+    "fields": {
+      "project_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "project_name",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "project_name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "property",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "property_name",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "property_value",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "property_name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "property_value",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "property_value_date",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "blank_line",
+          "named": true
+        },
+        {
+          "type": "project",
+          "named": true
+        },
+        {
+          "type": "subtask",
+          "named": true
+        },
+        {
+          "type": "task",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "subtask",
+    "named": true,
+    "fields": {
+      "subtask_description": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "subtask_description",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "indent",
+          "named": true
+        },
+        {
+          "type": "property",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "subtask_description",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "task",
+    "named": true,
+    "fields": {
+      "description": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "description",
+            "named": true
+          }
+        ]
+      },
+      "priority": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "priority",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "property",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": "+",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "@",
+    "named": false
+  },
+  {
+    "type": "blank_line",
+    "named": true
+  },
+  {
+    "type": "deadline",
+    "named": false
+  },
+  {
+    "type": "description",
+    "named": true
+  },
+  {
+    "type": "due",
+    "named": false
+  },
+  {
+    "type": "indent",
+    "named": true
+  },
+  {
+    "type": "priority",
+    "named": true
+  },
+  {
+    "type": "property_value_date",
+    "named": true
+  }
+]

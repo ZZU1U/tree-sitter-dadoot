@@ -1,0 +1,203 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
+  "name": "dadoot",
+  "rules": {
+    "source_file": {
+      "type": "REPEAT",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_block"
+      }
+    },
+    "_block": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "project"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "subtask"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "blank_line"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "task"
+        }
+      ]
+    },
+    "project": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "FIELD",
+          "name": "project_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "project_name"
+          }
+        }
+      ]
+    },
+    "project_name": {
+      "type": "PATTERN",
+      "value": "[^\\n]+"
+    },
+    "task": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "priority",
+          "content": {
+            "type": "SYMBOL",
+            "name": "priority"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "description",
+          "content": {
+            "type": "SYMBOL",
+            "name": "description"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "property"
+          }
+        }
+      ]
+    },
+    "priority": {
+      "type": "PATTERN",
+      "value": "!+"
+    },
+    "description": {
+      "type": "PATTERN",
+      "value": "[^@\\n]+"
+    },
+    "property": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "property_name"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "property_value"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "property_name": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "due"
+        },
+        {
+          "type": "STRING",
+          "value": "deadline"
+        }
+      ]
+    },
+    "property_value": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "property_value_date"
+        }
+      ]
+    },
+    "property_value_date": {
+      "type": "PATTERN",
+      "value": "\\d{4}-\\d{2}-\\d{2}"
+    },
+    "subtask": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ \\t]+"
+          },
+          "named": true,
+          "value": "indent"
+        },
+        {
+          "type": "STRING",
+          "value": "+"
+        },
+        {
+          "type": "FIELD",
+          "name": "subtask_description",
+          "content": {
+            "type": "SYMBOL",
+            "name": "subtask_description"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "property"
+          }
+        }
+      ]
+    },
+    "subtask_description": {
+      "type": "PATTERN",
+      "value": "[^\\n]+"
+    },
+    "blank_line": {
+      "type": "PATTERN",
+      "value": "\\n"
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "\\s"
+    }
+  ],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": [],
+  "reserved": {}
+}
