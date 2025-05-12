@@ -26,9 +26,7 @@ module.exports = grammar({
 
     task: $ => seq(
       field('priority', $.priority),
-      ' ',
       field('description', $.line_content),
-      ' ',
       repeat($.property),
       '\n',
       repeat($.additional_description),
@@ -40,7 +38,6 @@ module.exports = grammar({
     additional_description: $ => seq(
       $.tab_indent,
       $.line_content,
-      '\n'
     ),
 
     property: $ => seq(
@@ -56,9 +53,7 @@ module.exports = grammar({
     subtask: $ => seq(
       field('indent', $.tab_indent),
       '+',
-      ' ',
       field('subtask_description', $.line_content),
-      ' ',
       repeat($.property),
       //repeat($.additional_description),
     ),

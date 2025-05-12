@@ -55,20 +55,12 @@
           }
         },
         {
-          "type": "STRING",
-          "value": " "
-        },
-        {
           "type": "FIELD",
           "name": "description",
           "content": {
             "type": "SYMBOL",
             "name": "line_content"
           }
-        },
-        {
-          "type": "STRING",
-          "value": " "
         },
         {
           "type": "REPEAT",
@@ -115,10 +107,6 @@
         {
           "type": "SYMBOL",
           "name": "line_content"
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
         }
       ]
     },
@@ -192,20 +180,12 @@
           "value": "+"
         },
         {
-          "type": "STRING",
-          "value": " "
-        },
-        {
           "type": "FIELD",
           "name": "subtask_description",
           "content": {
             "type": "SYMBOL",
             "name": "line_content"
           }
-        },
-        {
-          "type": "STRING",
-          "value": " "
         },
         {
           "type": "REPEAT",
