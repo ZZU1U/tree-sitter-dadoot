@@ -15,24 +15,34 @@ module.exports = grammar({
 
     _block: $ => choice(
       $.project,
-      $.subtask,
-      $.blank_line,
       $.task,
+      $.blank_line,
     ),
 
     project: $ => seq(
       '=',
-      field('project_name', $.project_name)
+      field('project_name', /[^\n]+/),
     ),
-    project_name: _ => /[^\n]+/,
 
     task: $ => seq(
       field('priority', $.priority),
-      field('description', $.description),
-      repeat($.property)
+      ' ',
+      field('description', $.line_content),
+      ' ',
+      repeat($.property),
+      '\n',
+      repeat($.additional_description),
+      repeat($.subtask)
     ),
-    priority: _ => /!+/,
+
+    priority: _ => /!{1,3}/,
     description: _ => /[^@\n]+/,  // up to first @ or newline
+    additional_description: $ => seq(
+      $.tab_indent,
+      $.line_content,
+      '\n'
+    ),
+
     property: $ => seq(
       '@',
       field('name', $.property_name),
@@ -40,18 +50,21 @@ module.exports = grammar({
       field('value', $.property_value),
       ')'
     ),
-    property_name: $ => choice('due', 'deadline'),
-    property_value: $ => choice($.property_value_date),
-    property_value_date: $ => /\d{4}-\d{2}-\d{2}/,
+    property_name: $ => choice('due', 'deadline', 'every'),
+    property_value: _ => /[^\)\n]+/,
 
     subtask: $ => seq(
-      alias(/[ \t]+/, $.indent),
+      field('indent', $.tab_indent),
       '+',
-      field('subtask_description', $.subtask_description),
-      repeat($.property)
+      ' ',
+      field('subtask_description', $.line_content),
+      ' ',
+      repeat($.property),
+      //repeat($.additional_description),
     ),
-    subtask_description: _ => /[^\n]+/,
     
+    line_content: _ => /[^@\n+][^\n]*/,
     blank_line: _ => /\n/,
+    tab_indent: _ => /[ \t]+/,
   }
 });

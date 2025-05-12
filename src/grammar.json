@@ -18,15 +18,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "subtask"
+          "name": "task"
         },
         {
           "type": "SYMBOL",
           "name": "blank_line"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "task"
         }
       ]
     },
@@ -41,15 +37,11 @@
           "type": "FIELD",
           "name": "project_name",
           "content": {
-            "type": "SYMBOL",
-            "name": "project_name"
+            "type": "PATTERN",
+            "value": "[^\\n]+"
           }
         }
       ]
-    },
-    "project_name": {
-      "type": "PATTERN",
-      "value": "[^\\n]+"
     },
     "task": {
       "type": "SEQ",
@@ -63,12 +55,20 @@
           }
         },
         {
+          "type": "STRING",
+          "value": " "
+        },
+        {
           "type": "FIELD",
           "name": "description",
           "content": {
             "type": "SYMBOL",
-            "name": "description"
+            "name": "line_content"
           }
+        },
+        {
+          "type": "STRING",
+          "value": " "
         },
         {
           "type": "REPEAT",
@@ -76,16 +76,51 @@
             "type": "SYMBOL",
             "name": "property"
           }
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "additional_description"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "subtask"
+          }
         }
       ]
     },
     "priority": {
       "type": "PATTERN",
-      "value": "!+"
+      "value": "!{1,3}"
     },
     "description": {
       "type": "PATTERN",
       "value": "[^@\\n]+"
+    },
+    "additional_description": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "tab_indent"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "line_content"
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
+        }
+      ]
     },
     "property": {
       "type": "SEQ",
@@ -130,45 +165,47 @@
         {
           "type": "STRING",
           "value": "deadline"
+        },
+        {
+          "type": "STRING",
+          "value": "every"
         }
       ]
     },
     "property_value": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "property_value_date"
-        }
-      ]
-    },
-    "property_value_date": {
       "type": "PATTERN",
-      "value": "\\d{4}-\\d{2}-\\d{2}"
+      "value": "[^\\)\\n]+"
     },
     "subtask": {
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
+          "type": "FIELD",
+          "name": "indent",
           "content": {
-            "type": "PATTERN",
-            "value": "[ \\t]+"
-          },
-          "named": true,
-          "value": "indent"
+            "type": "SYMBOL",
+            "name": "tab_indent"
+          }
         },
         {
           "type": "STRING",
           "value": "+"
         },
         {
+          "type": "STRING",
+          "value": " "
+        },
+        {
           "type": "FIELD",
           "name": "subtask_description",
           "content": {
             "type": "SYMBOL",
-            "name": "subtask_description"
+            "name": "line_content"
           }
+        },
+        {
+          "type": "STRING",
+          "value": " "
         },
         {
           "type": "REPEAT",
@@ -179,13 +216,17 @@
         }
       ]
     },
-    "subtask_description": {
+    "line_content": {
       "type": "PATTERN",
-      "value": "[^\\n]+"
+      "value": "[^@\\n+][^\\n]*"
     },
     "blank_line": {
       "type": "PATTERN",
       "value": "\\n"
+    },
+    "tab_indent": {
+      "type": "PATTERN",
+      "value": "[ \\t]+"
     }
   },
   "extras": [

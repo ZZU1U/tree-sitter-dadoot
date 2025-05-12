@@ -1,11 +1,13 @@
-= Домашние дела
-! Помыть посуду
-!! Прибраться в комнате
+= Housework
+! Wash dishes
+!! Clean up mess in my room
 
-= Учеба
-!!! кф(c) @due(2025-10-13)
-	+ Сделать задачу на дп 
-	+ Сделать задачу на бинпоиск
+= Univeristy
+!!! Algorithm tasks @due(2025-10-13)
+    + Write red-black tree in C
+    + Complete binary search contest
 
 = GYM
-! Обновить билет
+! Hit new PR @deadline(2025-09-01)
+	Last time I bench pressed 100 lbs,
+	next time expect to hit 120.
